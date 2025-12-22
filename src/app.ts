@@ -1,22 +1,24 @@
-import express from "express";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import dotenv from "dotenv";
-import authRoutes from "./routes/auth.routes";
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import routes from './routes';
+import dotenv from 'dotenv';
+import { errorHandler } from './middlewares/error.middleware';
+
 dotenv.config();
+
+const FRONT = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true
-}));
+app.use(cors({ origin: FRONT, credentials: true }));
 
-app.use("/api/auth", authRoutes);
+app.use('/api', routes);
 
-// example protected route
-app.get("/api/protected", (req, res) => res.json({ ok: true }));
+app.get('/', (_req, res) => res.send('Juice Shop API'));
+
+app.use(errorHandler);
 
 export default app;
