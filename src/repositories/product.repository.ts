@@ -14,7 +14,26 @@ export const deleteProductRepo = async (id: string) => {
 };
 
 export const findProductsRepo = async (filter: any = {}) => {
-    return Product.find(filter);
+    const query: any = {};
+    
+    if (filter.category) {
+        query.category = filter.category;
+    }
+    
+    if (filter.isFamous !== undefined) {
+        query.isFamous = filter.isFamous;
+    }
+    
+    if (filter.search) {
+        const searchRegex = new RegExp(filter.search, 'i');
+        query.$or = [
+            { name: searchRegex },
+            { description: searchRegex },
+            { ingredients: { $in: [searchRegex] } }
+        ];
+    }
+    
+    return Product.find(query);
 };
 
 export const findProductById = async (id: string) => {

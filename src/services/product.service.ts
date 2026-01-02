@@ -13,9 +13,11 @@ export const deleteProductService = async (id: string) => {
     return productRepo.deleteProductRepo(id);
 };
 
-export const listProductsService = async (category?: string) => {
+export const listProductsService = async (category?: string, search?: string, isFamous?: boolean) => {
     const filter: any = {};
     if (category) filter.category = category;
+    if (search) filter.search = search;
+    if (isFamous !== undefined) filter.isFamous = isFamous;
     return productRepo.findProductsRepo(filter);
 };
 

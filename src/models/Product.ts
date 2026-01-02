@@ -8,6 +8,7 @@ export interface IProduct extends Document {
     description: string;
     ingredients: string[];
     alcoholBrands?: string[];
+    isFamous?: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -19,7 +20,8 @@ const ProductSchema = new Schema<IProduct>({
     name: { type: String, required: true },
     description: { type: String, default: '' },
     ingredients: { type: [String], default: [] },
-    alcoholBrands: { type: [String], default: [] }
+    alcoholBrands: { type: [String], default: [] },
+    isFamous: { type: Boolean, default: false }
 }, { timestamps: true });
 
 

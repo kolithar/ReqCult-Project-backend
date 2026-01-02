@@ -31,7 +31,9 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const category = req.query.category as string | undefined;
-        const products = await productService.listProductsService(category);
+        const search = req.query.search as string | undefined;
+        const isFamous = req.query.isFamous === 'true' ? true : req.query.isFamous === 'false' ? false : undefined;
+        const products = await productService.listProductsService(category, search, isFamous);
         res.json(products);
     } catch (err) {
         next(err);
