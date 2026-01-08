@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser';
 import routes from './routes';
 import dotenv from 'dotenv';
 import { errorHandler } from './middlewares/error.middleware';
+import pdfRoutes from "./routes/pdf.routes";
+
 
 dotenv.config();
 
@@ -19,6 +21,7 @@ app.use('/api', routes);
 
 app.get('/', (_req, res) => res.send('Juice Shop API'));
 
+app.use("/api/pdf", pdfRoutes);
 app.use(errorHandler);
 
 export default app;
